@@ -1,0 +1,10 @@
+{
+  "name": "Maxi Aringoli · Ingeniería de Software",
+  "short_name": "Maxi Aringoli",
+  "description": "Ingeniería de software, desarrollo Full Stack, automatización e infraestructura.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080a0d",
+  "theme_color": "#080a0d",
+  "lang": "es-AR"
+}
