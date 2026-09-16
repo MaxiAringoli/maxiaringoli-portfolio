@@ -54,7 +54,7 @@ Base:
 portfolio_db
 ```
 
-Tabla:
+Tabla productiva:
 
 ```sql
 CREATE TABLE portfolio_events (
@@ -68,6 +68,20 @@ CREATE TABLE portfolio_events (
     INDEX idx_created_at (created_at)
 );
 ```
+
+Tabla de pruebas:
+
+```sql
+CREATE TABLE portfolio_events_test LIKE portfolio_events;
+```
+
+El endpoint selecciona la tabla exclusivamente según el host recibido:
+
+- `maxiaringoli.com.ar` y `www.maxiaringoli.com.ar` -> `portfolio_events`
+- `portfolio.maxiaringoli.com.ar` -> `portfolio_events_test`
+- cualquier otro host -> solicitud rechazada con `invalid_host`
+
+Esto permite probar el portfolio sin contaminar las métricas productivas.
 
 Usuario de aplicación:
 
@@ -168,12 +182,16 @@ GROUP BY event_name, source
 ORDER BY total DESC;
 ```
 
+Para inspeccionar pruebas, usar las mismas consultas reemplazando `portfolio_events` por `portfolio_events_test`.
+
 ## Mantenimiento
 
 - Mantener `server/analytics/event.php` como fuente versionada del endpoint desplegado.
+- `deploy-production.sh` valida y despliega el endpoint PHP compartido desde `main`.
+- El deploy de pruebas no debe sobrescribir el endpoint PHP compartido con una versión de `develop`.
 - No ampliar permisos de `portfolio_app` salvo necesidad explícita.
 - No versionar `analytics.env` ni credenciales.
 - Validar siempre `php -l` antes de actualizar el endpoint en el VPS.
 - Validar `nginx -t` antes de cualquier recarga de Nginx.
 - Mantener la lista de eventos del frontend sincronizada con la whitelist del endpoint PHP.
-- Limpiar eventos de prueba usando un usuario administrativo; `portfolio_app` no tiene permiso `DELETE`.
+- Los eventos de prueba deben quedar en `portfolio_events_test`; la tabla productiva no debe limpiarse por pruebas rutinarias.

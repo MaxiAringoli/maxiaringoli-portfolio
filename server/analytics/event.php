@@ -57,6 +57,17 @@ if ($source !== null && (!is_string($source) || strlen($source) > 50)) {
     respond(400, ['error' => 'invalid_source']);
 }
 
+$host = strtolower(explode(':', (string) ($_SERVER['HTTP_HOST'] ?? ''), 2)[0]);
+$table = match ($host) {
+    'maxiaringoli.com.ar', 'www.maxiaringoli.com.ar' => 'portfolio_events',
+    'portfolio.maxiaringoli.com.ar' => 'portfolio_events_test',
+    default => null,
+};
+
+if ($table === null) {
+    respond(400, ['error' => 'invalid_host']);
+}
+
 try {
     $envLines = file(
         '/etc/maxiaringoli-portfolio/analytics.env',
@@ -100,8 +111,7 @@ try {
     );
 
     $statement = $pdo->prepare(
-        'INSERT INTO portfolio_events (event_name, event_value, source)
-         VALUES (:event_name, :event_value, :source)'
+        "INSERT INTO {$table} (event_name, event_value, source)\n         VALUES (:event_name, :event_value, :source)"
     );
 
     $statement->execute([
