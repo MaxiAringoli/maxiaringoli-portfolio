@@ -1,0 +1,59 @@
+name: Sync main to develop
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-main-to-develop
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Align develop with main
+    if: >-
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.head.ref == 'develop' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Verify develop has not advanced
+        env:
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          git fetch origin develop main
+          current_develop="$(git rev-parse origin/develop)"
+
+          if [ "$current_develop" != "$PR_HEAD_SHA" ]; then
+            echo "develop advanced after the production PR was created/merged."
+            echo "Expected: $PR_HEAD_SHA"
+            echo "Current:  $current_develop"
+            echo "Refusing to overwrite newer work."
+            exit 1
+          fi
+
+      - name: Align develop exactly with main
+        env:
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          git push \
+            --force-with-lease=refs/heads/develop:${PR_HEAD_SHA} \
+            origin \
+            refs/remotes/origin/main:refs/heads/develop
+
+      - name: Verify branches are identical
+        run: |
+          git fetch origin develop main
+          test "$(git rev-parse origin/main)" = "$(git rev-parse origin/develop)"
