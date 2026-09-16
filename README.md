@@ -12,6 +12,8 @@ Presentar servicios de ingeniería de software, desarrollo Full Stack, automatiz
 - Vite 8
 - TypeScript 7
 - CSS nativo
+- PHP 8.1 + PDO para analytics
+- MySQL 8 para eventos
 
 ## Desarrollo local
 
@@ -27,6 +29,12 @@ npm run build
 ```
 
 El resultado estático se genera en `dist/` y puede ser servido directamente por Nginx.
+
+## Analytics
+
+El portfolio incluye una analítica propia y minimalista para medir visitas y clics relevantes sin cookies, fingerprinting ni servicios externos.
+
+Documentación: [`docs/analytics.md`](docs/analytics.md)
 
 ## Flujo Git
 
