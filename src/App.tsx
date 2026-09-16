@@ -37,7 +37,7 @@ function App() {
   return (
     <div className="site-shell">
       <header className="topbar">
-        <a className="brand" href="#inicio" aria-label="Ir al inicio">MAXI<span>.</span></a>
+        <a className="brand" href="#inicio" aria-label="Ir al inicio">MAXI ARINGOLI</a>
         <nav aria-label="Navegación principal"><a href="#servicios">Servicios</a><a href="#proyectos">Trabajo</a><a href="#experiencia">Experiencia</a><a href="#sobre-mi">Sobre mí</a><a className="nav-cta" href="#contacto">Hablemos</a></nav>
       </header>
 
