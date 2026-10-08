@@ -1,4 +1,5 @@
 import { trackEvent } from './analytics'
+import FocusPrinciples from './components/FocusPrinciples'
 
 const services = [
   ['01', 'Software a medida', 'Aplicaciones y plataformas construidas alrededor de tu operación, sin forzar tu negocio a adaptarse a una herramienta genérica.'],
@@ -70,6 +71,8 @@ function App() {
         <section className="section process"><div className="section-heading"><p className="eyebrow">Método</p><h2>Menos misterio.<br/>Más claridad.</h2></div><div className="process-list">{steps.map(([number,title,text])=><article key={title}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
 
         <section className="section technology"><div className="section-heading"><p className="eyebrow">Tecnología</p><h2>El stack se elige después del problema.</h2></div><div className="tech-grid">{techGroups.map(([title,items])=><div className="tech-row" key={title}><strong>{title}</strong><span>{items}</span></div>)}</div><blockquote>“No vendo una tecnología específica. Construyo la solución que el proyecto necesita.”</blockquote></section>
+
+        <FocusPrinciples />
 
         <section className="section about" id="sobre-mi"><div className="portrait"><img src="/images/maxi-aringoli-portfolio.png" alt="Maxi Aringoli, desarrollador Full Stack" loading="lazy" decoding="async"/><span className="portrait-label">MAXI ARINGOLI<br/><small>DESARROLLO · SOFTWARE</small></span></div><div className="about-copy"><p className="eyebrow">Sobre mí</p><h2>Experiencia detrás del código.</h2><p className="about-lead">Soy Maxi Aringoli, desarrollador de software. Trabajo profesionalmente en sistemas desde 2006 y durante mi carrera formé parte de equipos de Epson, BCRA, INVAP y Mercado Libre, además de proyectos para Federación Patronal e Interbanking.</p><p>Dos décadas trabajando en equipo y desarrollando sistemas me enseñaron que el software no termina cuando el código funciona. Tiene que poder usarse, mantenerse, evolucionar y acompañar una necesidad real. Hoy llevo ese criterio a cada proyecto, sin importar su escala.</p><div className="about-values"><span><b>20 años</b>Experiencia profesional</span><span><b>Full Stack</b>Producto completo</span><span><b>End-to-end</b>Idea a producción</span></div><a className="about-link" href="https://www.linkedin.com/in/maxiaringoli/" target="_blank" rel="noreferrer" onClick={() => trackEvent('linkedin_click', undefined, 'about')}>LinkedIn ↗</a></div></section>
 
