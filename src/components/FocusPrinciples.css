@@ -1,0 +1,81 @@
+.focus__heading {
+  max-width: 800px;
+  margin-bottom: 42px;
+}
+
+.focus__heading h2 {
+  margin: 15px 0;
+  font-size: clamp(2.5rem, 5vw, 4.9rem);
+  line-height: 1.02;
+  letter-spacing: -0.052em;
+}
+
+.focus__intro {
+  max-width: 650px;
+  margin: 20px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.focus__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.focus__card {
+  min-height: 220px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 18px;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.008));
+  transition: border-color 0.25s, transform 0.25s;
+}
+
+.focus__card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(103, 232, 181, 0.25);
+}
+
+.focus__number {
+  padding-top: 4px;
+  color: var(--accent);
+  font: 700 0.7rem ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.focus__card h3 {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+.focus__card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .focus__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .focus__card {
+    min-height: auto;
+    padding: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .focus__card {
+    transition: none;
+  }
+
+  .focus__card:hover {
+    transform: none;
+  }
+}
